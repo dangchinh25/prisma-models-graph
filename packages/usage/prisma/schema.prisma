@@ -41,7 +41,7 @@ model UserGroup {
 }
 
 model UserUserGroups {
-  userId      Int @map("user_id") /// [User.id]
+  userId      Int @map("user_id") /// [[User.id]]
   userGroupId Int @map("user_group_id") /// [[UserGroup.id]]
 
   @@unique([userId, userGroupId])
