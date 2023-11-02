@@ -12,6 +12,17 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
+
+  @@map("users")
+}
+
+model Post {
+  id      Int    @id @default(autoincrement())
+  subject String
+  body    String
+  userId  Int    @map("user_id") /// [[User.id]]
+
+  @@map("posts")
 }
 
 enum NotificationType {
