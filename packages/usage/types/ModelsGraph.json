@@ -1,4 +1,19 @@
 {
-  "users": {},
-  "posts": {}
+  "users": {
+    "attributes": [
+      "id",
+      "email",
+      "name"
+    ],
+    "relations": []
+  },
+  "posts": {
+    "attributes": [
+      "id",
+      "subject",
+      "body",
+      "user_id"
+    ],
+    "relations": []
+  }
 }
