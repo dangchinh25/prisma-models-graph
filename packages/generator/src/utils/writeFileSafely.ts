@@ -2,12 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from 'fs';
 import path from 'path';
+import { formatFile } from './formatFile';
 
-export const writeFileSafely = (
+export const writeFileSafely = async (
     writeLocation: string,
     content: any
-): void => {
+): Promise<void> => {
     fs.mkdirSync( path.dirname( writeLocation ), { recursive: true } );
 
-    fs.writeFileSync( writeLocation, content );
+    fs.writeFileSync( writeLocation, await formatFile( content ) );
 };
