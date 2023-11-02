@@ -14,7 +14,7 @@ export const formatFile = ( content: string ): Promise<string> => {
                         parser: 'typescript'
                     } );
 
-                    res( formatted );
+                    res( content );
                 } catch ( error ) {
                     rej( error );
                 }

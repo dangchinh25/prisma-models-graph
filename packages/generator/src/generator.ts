@@ -7,7 +7,7 @@ import {
 import { logger } from '@prisma/sdk';
 import path from 'path';
 import { GENERATOR_NAME } from './constants';
-import { genEnum } from './helpers/genEnum';
+import { parseDMMFModels } from './helpers';
 import { writeFileSafely } from './utils/writeFileSafely';
 
 const { version } = require( '../package.json' );
@@ -23,26 +23,13 @@ generatorHandler( {
         };
     },
     onGenerate: async ( options: GeneratorOptions ): Promise<void> => {
-        options.dmmf.datamodel.enums.forEach( async ( enumInfo ) => {
-            const tsEnum = genEnum( enumInfo );
-
-            const writeLocation = path.join(
-                options.generator.output?.value!,
-                `${ enumInfo.name }.ts`
-            );
-
-            await writeFileSafely( writeLocation, tsEnum );
-        } );
-
-        options.dmmf.datamodel.models.forEach( model => {
-            console.log( model );
-        } );
+        const jsonModelsGraph = parseDMMFModels( options.dmmf.datamodel.models );
 
         const writeLocation = path.join(
             options.generator.output?.value!,
-            `ModelsGraph.ts`
+            `ModelsGraph.json`
         );
 
-        await writeFileSafely( writeLocation, '123' );
+        writeFileSafely( writeLocation, JSON.stringify( jsonModelsGraph )  );
     }
 } );
