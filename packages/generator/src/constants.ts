@@ -1,1 +1,1 @@
-export const GENERATOR_NAME = 'prisma-models-graph'
+export const GENERATOR_NAME = 'prisma-models-graph';

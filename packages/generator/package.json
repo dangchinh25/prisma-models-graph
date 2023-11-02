@@ -15,7 +15,8 @@
     "dev": "npx tsc -w",
     "build": "npx tsc",
     "prepack": "yarn build",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint --fix ."
   },
   "dependencies": {
     "@prisma/client": "^5.2.0",
