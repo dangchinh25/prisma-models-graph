@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { generatorHandler, GeneratorOptions } from '@prisma/generator-helper';
 import { logger } from '@prisma/sdk';
 import path from 'path';
@@ -21,8 +24,8 @@ generatorHandler( {
             const tsEnum = genEnum( enumInfo );
 
             const writeLocation = path.join(
-        options.generator.output?.value!,
-        `${ enumInfo.name }.ts`
+                options.generator.output?.value!,
+                `${ enumInfo.name }.ts`
             );
 
             await writeFileSafely( writeLocation, tsEnum );
