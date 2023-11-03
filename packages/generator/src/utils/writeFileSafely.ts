@@ -10,5 +10,11 @@ export const writeFileSafely = async (
 ): Promise<void> => {
     fs.mkdirSync( path.dirname( writeLocation ), { recursive: true } );
 
-    fs.writeFileSync( writeLocation, await formatFile( content ) );
+    const formattedFile = await formatFile( content );
+
+    console.log( formattedFile );
+
+    fs.writeFileSync( writeLocation, formattedFile );
+
+    fs.writeFileSync( writeLocation, content );
 };
