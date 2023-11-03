@@ -23,13 +23,13 @@ generatorHandler( {
         };
     },
     onGenerate: async ( options: GeneratorOptions ): Promise<void> => {
-        const jsonModelsGraph = parseDMMFModels( options.dmmf.datamodel.models );
+        const modelsGraph = parseDMMFModels( options.dmmf.datamodel.models );
 
         const writeLocation = path.join(
             options.generator.output?.value!,
             `ModelsGraph.json`
         );
 
-        writeFileSafely( writeLocation, JSON.stringify( jsonModelsGraph )  );
+        writeFileSafely( writeLocation, JSON.stringify( modelsGraph )  );
     }
 } );

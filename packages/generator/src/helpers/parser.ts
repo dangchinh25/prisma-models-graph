@@ -5,12 +5,14 @@ export const parseDMMFModels = (
     models: DMMF.Model[]
 ): ParsedModels => {
     const parsedModels: ParsedModels = {};
-    const modelsMap: Map<DMMF.Model['name'], DMMF.Model> = new Map();
+    const modelNameDbNameMap: Map<DMMF.Model['name'], string> = new Map();
     const attributesDbNameMap: Map<string, string> = new Map();
 
+    // First pass to init parsedModels object with all model
+    // and its attribute with empty relations
     for ( const model of models ) {
-        modelsMap.set( model.name, model );
-        const dbName = model.dbName || model.name;
+        const modelDbName = model.dbName || model.name;
+        modelNameDbNameMap.set( model.name, modelDbName );
 
         const parsedModel: ParsedModel = {
             attributes: [],
@@ -23,11 +25,16 @@ export const parseDMMFModels = (
             attributesDbNameMap.set( `${ model.name }.${ field.name }`, attribute );
         }
 
-        parsedModels[ dbName ] = parsedModel;
+        parsedModels[ modelDbName ] = parsedModel;
     }
 
+    // Second pass to populate bi-directional relations
     for ( const model of models ) {
-        const dbName = model.dbName || model.name;
+        const modelDbName = modelNameDbNameMap.get( model.name );
+
+        if ( !modelDbName ) {
+            continue;
+        }
 
         for ( const field of model.fields ) {
             const { documentation } = field;
@@ -45,22 +52,20 @@ export const parseDMMFModels = (
                 continue;
             }
 
-            const relationModel = modelsMap.get( relationModelName );
+            const relationModelDbName = modelNameDbNameMap.get( relationModelName );
 
-            if ( !relationModel ) {
+            if ( !relationModelDbName ) {
                 continue;
             }
 
-            const relationModelDbName = relationModel.dbName || relationModel.name;
-
-            parsedModels[ dbName ].relations.push( {
+            parsedModels[ modelDbName ].relations.push( {
                 modelName: relationModelDbName,
-                condition: `${ dbName }.${ fieldDbName } = ${ relationModelDbName }.${ relationAttributeDbName }`
+                condition: `${ modelDbName }.${ fieldDbName } = ${ relationModelDbName }.${ relationAttributeDbName }`
             } );
 
             parsedModels[ relationModelDbName ].relations.push( {
-                modelName: dbName,
-                condition: `${ relationModelDbName }.${ relationAttributeDbName } = ${ dbName }.${ fieldDbName }`
+                modelName: modelDbName,
+                condition: `${ relationModelDbName }.${ relationAttributeDbName } = ${ modelDbName }.${ fieldDbName }`
             } );
         }
     }
