@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.2...v1.1.3) (2023-11-03)
+
+
+### Bug Fixes
+
+* use async await to write file ([da1f31f](https://github.com/dangchinh25/prisma-models-graph/commit/da1f31f4875a140ed4a96b0f9db8381aa9194d89))
+
 ## [1.1.2](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.1...v1.1.2) (2023-11-03)
 
 
