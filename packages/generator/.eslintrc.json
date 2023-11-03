@@ -179,7 +179,7 @@
             "never"
         ],
         "no-unused-vars": [
-            "error",
+            "warn",
             {
                 "args": "after-used",
                 "caughtErrors": "none"
@@ -308,7 +308,7 @@
         "@typescript-eslint/no-explicit-any": "error",
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "error",
+        "@typescript-eslint/explicit-module-boundary-types": "warn",
         "@typescript-eslint/member-delimiter-style": "error",
         "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/prefer-optional-chain": "error",

@@ -4,32 +4,41 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id         Int     @id @default(autoincrement())
+  email      String  @unique
+  name       String?
+  userTypeId Int     @map("user_type_id") /// [[UserType.id]]
+
+  @@map("users")
 }
 
-enum NotificationType {
-  newPosts
-  newComments
-  newFollowers
-  reply
-  heartOnPost
-  heartOnComment
-  heartOnReply
+model Post {
+  id      Int    @id @default(autoincrement())
+  subject String
+  body    String
+  userId  Int    @map("user_id") /// [[User.id]]
+
+  @@map("posts")
 }
 
-enum Language {
-  Typescript
-  Javascript
-  Rust
-  Go
-  Python
-  Cpp
+model UserType {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  @@map("user_types")
 }
 
-enum State {
-  Active
-  Pending
-  Banned
+model UserGroup {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  @@map("user_groups")
+}
+
+model UserUserGroups {
+  userId      Int @map("user_id") /// [[User.id]]
+  userGroupId Int @map("user_group_id") /// [[UserGroup.id]]
+
+  @@unique([userId, userGroupId])
+  @@map("users_user_groups")
 }
