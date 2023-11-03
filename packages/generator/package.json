@@ -1,6 +1,6 @@
 {
   "name": "prisma-models-graph",
-  "description": "Provide a description about your generator",
+  "description": "Generates a bi-directional models graph for schema without strict relationship",
   "version": "1.0.0",
   "main": "dist/generator.js",
   "license": "MIT",
@@ -41,12 +41,12 @@
     "eslint-plugin-jest": "^27.2.2",
     "eslint-plugin-jest-formatting": "^3.1.0"
   },
-  "homepage": "Link to homepage or github readme here",
+  "homepage": "https://github.com/dangchinh25/prisma-models-graph",
   "repository": {
     "type": "git",
-    "url": "Repo link here"
+    "url": "https://github.com/dangchinh25/prisma-models-graph"
   },
-  "author": "Your Name <Your Email>",
+  "author": "Chinh Le chinh.le.dev@gmail.com",
   "keywords": [
     "prisma",
     "prisma2",
