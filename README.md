@@ -17,7 +17,7 @@ npm install prisma-models-graph
 
 ```prisma
 generator jsonSchema {
-  provider = "prisma-models-graph"
+  provider = "npx prisma-models-graph"
 }
 ```
 
