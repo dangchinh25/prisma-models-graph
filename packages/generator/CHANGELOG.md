@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.1...v1.1.2) (2023-11-03)
+
+
+### Bug Fixes
+
+* add temp log for parsing file ([8c729e3](https://github.com/dangchinh25/prisma-models-graph/commit/8c729e36c733a4e44dbed999d537c277c8fb04f8))
+
 ## [1.1.1](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.0...v1.1.1) (2023-11-03)
 
 
