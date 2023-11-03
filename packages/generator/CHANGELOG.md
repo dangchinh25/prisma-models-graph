@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.0...v1.1.1) (2023-11-03)
+
+
+### Bug Fixes
+
+* prettier config not found ([3795670](https://github.com/dangchinh25/prisma-models-graph/commit/3795670d421b3edea475789d92eb931873ad44e5))
+
 # [1.1.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.0.0...v1.1.0) (2023-11-03)
 
 
