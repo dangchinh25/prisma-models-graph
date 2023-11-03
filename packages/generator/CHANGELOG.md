@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.4...v1.1.5) (2023-11-03)
+
+
+### Bug Fixes
+
+* test write to 2 location ([b7f669e](https://github.com/dangchinh25/prisma-models-graph/commit/b7f669ebb8f53ab0c25adcea26bd9fcb1f84cf9c))
+
 ## [1.1.4](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.3...v1.1.4) (2023-11-03)
 
 
