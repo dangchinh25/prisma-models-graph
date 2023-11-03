@@ -1,5 +1,7 @@
 generator custom_generator {
   provider = "npx prisma-models-graph"
+  fileName = "custom.json"
+  output   = "./test"
 }
 
 datasource db {

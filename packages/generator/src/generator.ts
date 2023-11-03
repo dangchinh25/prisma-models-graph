@@ -6,8 +6,10 @@ import {
 } from '@prisma/generator-helper';
 import { logger } from '@prisma/sdk';
 import path from 'path';
-import { GENERATOR_NAME } from './constants';
-import { parseDMMFModels } from './helpers';
+import {
+    DEFAULT_FILE_NAME, DEFAULT_OUTPUT_FOLDER, GENERATOR_NAME
+} from './constants';
+import { formatFileName, parseDMMFModels } from './helpers';
 import { writeFileSafely } from './utils/writeFileSafely';
 
 const { version } = require( '../package.json' );
@@ -18,16 +20,24 @@ generatorHandler( {
 
         return {
             version,
-            defaultOutput: './modelsGraph',
+            defaultOutput: DEFAULT_OUTPUT_FOLDER,
             prettyName: GENERATOR_NAME
         };
     },
     onGenerate: async ( options: GeneratorOptions ): Promise<void> => {
         const modelsGraph = parseDMMFModels( options.dmmf.datamodel.models );
 
+        let writeFileName = DEFAULT_FILE_NAME;
+        const { fileName } = options.generator.config;
+
+        if ( fileName ) {
+            // This is to handle generator config can be an array of string
+            writeFileName = typeof fileName === 'string' ? formatFileName( fileName ) : formatFileName( fileName[ 0 ] );
+        }
+
         const writeLocation = path.join(
             options.generator.output?.value!,
-            `ModelsGraph.json`
+            writeFileName
         );
 
         writeFileSafely( writeLocation, JSON.stringify( modelsGraph )  );
