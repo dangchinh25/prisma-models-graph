@@ -40,12 +40,6 @@ generatorHandler( {
             writeFileName
         );
 
-        const writeLocation2 = path.join(
-            `./node_modules/${ options.generator.name }`,
-            writeFileName
-        );
-
         writeFileSafely( writeLocation1, JSON.stringify( modelsGraph )  );
-        writeFileSafely( writeLocation2, JSON.stringify( modelsGraph )  );
     }
 } );
