@@ -44,9 +44,9 @@ export const parseDMMFModels = (
                 continue;
             }
 
-            const relationAttribute = documentation.replace( /\[\[|\]\]/g, '' );
-            const relationModelName = relationAttribute.split( '.' )[ 0 ];
-            const relationAttributeDbName = attributesDbNameMap.get( relationAttribute );
+            const relationAnnotation = parseDMMFFieldDocumentation( documentation );
+            const relationModelName = relationAnnotation.split( '.' )[ 0 ];
+            const relationAttributeDbName = attributesDbNameMap.get( relationAnnotation );
 
             if ( !relationAttributeDbName ) {
                 continue;
@@ -71,4 +71,25 @@ export const parseDMMFModels = (
     }
 
     return parsedModels;
+};
+
+/**
+ * Use RegExp to parse, validate and extract
+ * relation annotation
+ * @returns relationAnnotation
+ */
+const parseDMMFFieldDocumentation = (
+    fieldDocumentation: string
+): string => {
+    const regex = new RegExp( /\[\[(.*?)\]\]/g );
+
+    const matches = regex.exec( fieldDocumentation );
+
+    if ( !matches ) {
+        throw new Error( 'Invalid relation annotation format.' );
+    }
+
+    const [ , matchWithoutSymbol ] = matches;
+
+    return matchWithoutSymbol;
 };
