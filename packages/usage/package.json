@@ -4,14 +4,17 @@
   "version": "1.0.0",
   "main": "src/app.js",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "npx ts-node index.ts"
+  },
   "dependencies": {
     "@prisma/client": "^5.2.0",
     "prisma": "^5.2.0"
   },
   "devDependencies": {
-    "@types/node": "16.11.7",
+    "@types/node": "^20.4.0",
     "prisma-models-graph": "workspace:*",
+    "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }
 }

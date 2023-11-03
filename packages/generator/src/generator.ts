@@ -35,11 +35,17 @@ generatorHandler( {
             writeFileName = typeof fileName === 'string' ? formatFileName( fileName ) : formatFileName( fileName[ 0 ] );
         }
 
-        const writeLocation = path.join(
+        const writeLocation1 = path.join(
             options.generator.output?.value!,
             writeFileName
         );
 
-        writeFileSafely( writeLocation, JSON.stringify( modelsGraph )  );
+        const writeLocation2 = path.join(
+            `./node_modules/${ options.generator.name }`,
+            writeFileName
+        );
+
+        writeFileSafely( writeLocation1, JSON.stringify( modelsGraph )  );
+        writeFileSafely( writeLocation2, JSON.stringify( modelsGraph )  );
     }
 } );
