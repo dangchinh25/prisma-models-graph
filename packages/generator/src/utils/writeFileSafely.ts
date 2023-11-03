@@ -10,9 +10,14 @@ export const writeFileSafely = async (
     writeLocation: string,
     content: any
 ): Promise<void> => {
-    await mkdir( path.dirname( writeLocation ), { recursive: true } );
+    try {
+        await mkdir( path.dirname( writeLocation ), { recursive: true } );
 
-    const formattedFile = await formatFile( content );
+        const formattedFile = await formatFile( content );
 
-    await writeFile( writeLocation, formattedFile );
+        await writeFile( writeLocation, formattedFile );
+    } catch ( error ) {
+        console.error( 'Error: unable to write files for Prisma Models Graph Generator' );
+        throw error;
+    }
 };
