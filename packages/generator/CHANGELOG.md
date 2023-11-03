@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.3...v1.1.4) (2023-11-03)
+
+
+### Bug Fixes
+
+* add error handling ([5d4814a](https://github.com/dangchinh25/prisma-models-graph/commit/5d4814adb2ab0f922ce851b5330a0266d00f85c8))
+
 ## [1.1.3](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.2...v1.1.3) (2023-11-03)
 
 
