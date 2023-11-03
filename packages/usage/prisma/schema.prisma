@@ -1,6 +1,5 @@
 generator custom_generator {
   provider = "npx prisma-models-graph"
-  output   = "../types"
 }
 
 datasource db {

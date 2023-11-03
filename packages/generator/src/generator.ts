@@ -18,7 +18,7 @@ generatorHandler( {
 
         return {
             version,
-            defaultOutput: '../generated',
+            defaultOutput: './modelsGraph',
             prettyName: GENERATOR_NAME
         };
     },
