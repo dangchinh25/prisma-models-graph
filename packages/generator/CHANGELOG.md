@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.0.0...v1.1.0) (2023-11-03)
+
+
+### Features
+
+* update readme and assets location ([a6efff8](https://github.com/dangchinh25/prisma-models-graph/commit/a6efff847ae31c4f1a605f11a7c9fc30e1390244))
+
 # 1.0.0 (2023-11-03)
 
 
