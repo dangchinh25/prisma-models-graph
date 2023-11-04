@@ -1,3 +1,11 @@
+## [1.1.7](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.6...v1.1.7) (2023-11-04)
+
+
+### Bug Fixes
+
+* add async await ([8e198e8](https://github.com/dangchinh25/prisma-models-graph/commit/8e198e8eb4abf67ac97983e7a2c2d42695d5a3ed))
+* update workflow ([2c8ac6e](https://github.com/dangchinh25/prisma-models-graph/commit/2c8ac6e80d0caa39669c1ed5b6259ac1d226a12a))
+
 ## [1.1.6](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.5...v1.1.6) (2023-11-03)
 
 
