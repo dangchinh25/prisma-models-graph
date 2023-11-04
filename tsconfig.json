@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "es2022",
     "module": "commonjs",
     "lib": [
       "esnext"
@@ -14,21 +14,18 @@
     "forceConsistentCasingInFileNames": true,
     "removeComments": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "moduleResolution": "Node",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "dist",
     "newLine": "lf",
     "types": [
       "node",
       "jest"
     ],
   },
-  "include": [
-    "src/**/*"
-  ],
   "exclude": [
     "**/node_modules",
-    "**/dist"
+    "**/dist",
+    "./tests"
   ]
 }

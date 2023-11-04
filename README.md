@@ -17,7 +17,7 @@ npm install prisma-models-graph
 
 ```prisma
 generator jsonSchema {
-  provider = "npx prisma-models-graph"
+  provider = "prisma-models-graph"
 }
 ```
 
@@ -35,7 +35,7 @@ generator jsonSchema {
 
 - Add custom relation annotation next to the field you want annotate relationship.
 - Format: `/// [[<Relation Model>.<Relation Model Attribute>]]`
-  <img src='packages/generator/assets/annotation.png'>
+  <img src='./assets/annotation.png'>
 
 - With the above annotation, the generated models graph will be like this:
-  <img src='packages/generator/assets/output.png'>
+  <img src='./assets/output.png'>
