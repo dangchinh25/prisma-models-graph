@@ -40,6 +40,6 @@ generatorHandler( {
             writeFileName
         );
 
-        writeFileSafely( writeLocation1, JSON.stringify( modelsGraph )  );
+        await writeFileSafely( writeLocation1, JSON.stringify( modelsGraph )  );
     }
 } );
