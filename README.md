@@ -9,7 +9,7 @@ Generates a bi-directional models graph for schema without strict relationship d
 **1. Install**
 npm:
 
-```shell
+```sh
 npm install prisma-models-graph
 ```
 
