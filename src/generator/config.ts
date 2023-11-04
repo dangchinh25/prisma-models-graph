@@ -1,0 +1,1 @@
+export const TYPE_FOLDER_NAME = 'types';

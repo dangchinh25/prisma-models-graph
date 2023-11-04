@@ -4,7 +4,7 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
 import path from 'path';
 import { DEFAULT_FILE_NAME } from './constants';
-import { formatFileName, parseDMMFModels } from '../helpers';
+import { formatFileName, parseDMMFModels } from '../generator/helpers';
 import { writeFileSafely } from '../utils/writeFileSafely';
 import { generateCode } from '../generator/generateCode';
 
