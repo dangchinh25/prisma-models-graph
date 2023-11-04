@@ -1,5 +1,5 @@
 import { DMMF } from '@prisma/generator-helper';
-import { ParsedModel, ParsedModels } from 'src/types';
+import { ParsedModel, ParsedModels } from '../types';
 
 export const parseDMMFModels = (
     models: DMMF.Model[]

@@ -1,0 +1,78 @@
+{
+  "users": {
+    "attributes": [
+      "id",
+      "email",
+      "name",
+      "user_type_id"
+    ],
+    "relations": [
+      {
+        "modelName": "user_types",
+        "condition": "users.user_type_id = user_types.id"
+      },
+      {
+        "modelName": "posts",
+        "condition": "users.id = posts.user_id"
+      },
+      {
+        "modelName": "users_user_groups",
+        "condition": "users.id = users_user_groups.user_id"
+      }
+    ]
+  },
+  "posts": {
+    "attributes": [
+      "id",
+      "subject",
+      "body",
+      "user_id"
+    ],
+    "relations": [
+      {
+        "modelName": "users",
+        "condition": "posts.user_id = users.id"
+      }
+    ]
+  },
+  "user_types": {
+    "attributes": [
+      "id",
+      "name"
+    ],
+    "relations": [
+      {
+        "modelName": "users",
+        "condition": "user_types.id = users.user_type_id"
+      }
+    ]
+  },
+  "user_groups": {
+    "attributes": [
+      "id",
+      "name"
+    ],
+    "relations": [
+      {
+        "modelName": "users_user_groups",
+        "condition": "user_groups.id = users_user_groups.user_group_id"
+      }
+    ]
+  },
+  "users_user_groups": {
+    "attributes": [
+      "user_id",
+      "user_group_id"
+    ],
+    "relations": [
+      {
+        "modelName": "users",
+        "condition": "users_user_groups.user_id = users.id"
+      },
+      {
+        "modelName": "user_groups",
+        "condition": "users_user_groups.user_group_id = user_groups.id"
+      }
+    ]
+  }
+}

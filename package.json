@@ -1,8 +1,81 @@
 {
-  "devDependencies": {
-    "husky": "7.0.4"
+  "name": "prisma-models-graph",
+  "description": "Generates a bi-directional models graph for schema without strict relationship",
+  "version": "1.1.6",
+  "license": "MIT",
+  "bin": "./dist/generator.js",
+  "engines": {
+    "node": ">=14.0"
   },
   "scripts": {
+    "start": "node dist/bin.js",
+    "dev": "npx tsc -w",
+    "build": "npx tsc",
+    "prepack": "yarn build",
+    "test": "jest",
+    "lint": "eslint --fix .",
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.2.0",
+    "@prisma/generator-helper": "^5.2.0",
+    "@prisma/internals": "^5.2.0",
+    "prisma": "^5.2.0",
+    "prettier": "3.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.4.0",
+    "jest": "^29.6.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.1.6",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^18.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "@typescript-eslint/typescript-estree": "^5.61.0",
+    "eslint": "^8.44.0",
+    "eslint-plugin-jest": "^27.2.2",
+    "eslint-plugin-jest-formatting": "^3.1.0",
+    "husky": "7.0.4"
+  },
+  "homepage": "https://github.com/dangchinh25/prisma-models-graph",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dangchinh25/prisma-models-graph"
+  },
+  "author": "Chinh Le chinh.le.dev@gmail.com",
+  "keywords": [
+    "prisma",
+    "prisma2",
+    "generator"
+  ],
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ],
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "CHANGELOG.md",
+            "package.json"
+          ],
+          "message": "chore(release): set `package.json` to ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
   }
 }

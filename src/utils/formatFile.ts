@@ -9,7 +9,7 @@ export const formatFile = async (
     content: string,
     parser: Options['parser'] = 'json-stringify'
 ): Promise<string> => {
-    const formatted = prettier.format( content, { parser } );
+    const formatted = await prettier.format( content, { parser } );
 
     return formatted;
 };

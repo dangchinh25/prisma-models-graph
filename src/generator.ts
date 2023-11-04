@@ -4,7 +4,7 @@
 import {
     generatorHandler, GeneratorManifest, GeneratorOptions
 } from '@prisma/generator-helper';
-import { logger } from '@prisma/sdk';
+import { logger } from '@prisma/internals';
 import path from 'path';
 import {
     DEFAULT_FILE_NAME, DEFAULT_OUTPUT_FOLDER, GENERATOR_NAME
@@ -40,6 +40,6 @@ generatorHandler( {
             writeFileName
         );
 
-        writeFileSafely( writeLocation1, JSON.stringify( modelsGraph )  );
+        await writeFileSafely( writeLocation1, JSON.stringify( modelsGraph )  );
     }
 } );

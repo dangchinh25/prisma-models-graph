@@ -1,6 +1,6 @@
-import { parseDMMFModels } from '../../helpers';
+import { parseDMMFModels } from '../../src/helpers';
 import { getSampleDMMF } from '../__fixtures__/getSampleDMMF';
-import { ParsedModels } from '../../types';
+import { ParsedModels } from '../../src/types';
 import { DMMF } from '@prisma/generator-helper';
 
 describe( 'parseDMMFModels', () => {
@@ -48,9 +48,8 @@ describe( 'parseDMMFModels', () => {
         expect( userPostRelation )
             .toBeDefined( );
 
-        // Todo: For some reason get sampleDMMF does not work well with @map tags
         expect( userPostRelation?.condition )
-            .toBe( 'users.id = posts.userId' );
+            .toBe( 'users.id = posts.user_id' );
 
         const postUserRelation = postModelRelations.find( relation => relation.modelName === 'users' );
 
@@ -59,6 +58,6 @@ describe( 'parseDMMFModels', () => {
 
         // Todo: For some reason get sampleDMMF does not work well with @map tags
         expect( postUserRelation?.condition )
-            .toBe( 'posts.userId = users.id' );
+            .toBe( 'posts.user_id = users.id' );
     } );
 } );
