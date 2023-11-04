@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 /* eslint-disable @typescript-eslint/no-var-requires */
