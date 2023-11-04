@@ -1,1 +1,1 @@
-export const TYPE_FOLDER_NAME = 'types';
+export const TYPE_DIRECTORY_NAME = 'types';
