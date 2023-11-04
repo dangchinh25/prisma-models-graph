@@ -13,6 +13,7 @@ import {
 } from './constants';
 import { formatFileName, parseDMMFModels } from './helpers';
 import { writeFileSafely } from './utils/writeFileSafely';
+import { Project, StructureKind } from 'ts-morph';
 
 const { version } = require( '../package.json' );
 
@@ -43,5 +44,27 @@ generatorHandler( {
         );
 
         await writeFileSafely( writeLocation1, JSON.stringify( modelsGraph )  );
+
+        const project = new Project( { compilerOptions: { declaration: true } } );
+
+        project.createSourceFile( 'node_modules/@generated/models-graph/test.ts', {
+            statements: [
+                {
+                    kind: StructureKind.Enum,
+                    name: 'MyEnum',
+                    members: [
+                        { name: 'mem1', value: 1 },
+                        { name: 'mem2', value: 2 }
+                    ],
+                    isExported: true
+                }
+            ]
+        }, { overwrite: true } );
+
+        const indexFile = project.createSourceFile( 'node_modules/@generated/models-graph/index.ts', undefined, { overwrite: true } );
+
+        indexFile.addExportDeclaration( { moduleSpecifier: './test' } );
+
+        await project.emit();
     }
 } );
