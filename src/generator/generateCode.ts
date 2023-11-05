@@ -14,6 +14,8 @@ import {
     MODELS_GRAPH_FILE_NAME,
     MODELS_GRAPH_VARIABLE_NAME,
     PARSED_MODELS_TYPE_NAME,
+    PARSED_MODEL_RELATION_TYPE_NAME,
+    PARSED_MODEL_TYPE_NAME,
     TYPE_DIRECTORY_NAME
 } from './config';
 import { parseDMMFModels } from './helpers';
@@ -68,18 +70,18 @@ const generateTypeDirectory = async (
 
     const modelsTypeSourceFile = generatedTypeDirectory.createSourceFile(
         path.resolve( generatedTypeDirectory.getPath(), 'models.ts' ),
-        `export type ParsedModelRelation = {
+        `export type ${ PARSED_MODEL_RELATION_TYPE_NAME } = {
             modelName: string;
             condition: string;
         };
         
-        export type ParsedModel = {
+        export type ${ PARSED_MODEL_TYPE_NAME } = {
             attributes: string[];
-            relations: ParsedModelRelation[];
+            relations: ${ PARSED_MODEL_RELATION_TYPE_NAME }[];
         };
         
         export type ${ PARSED_MODELS_TYPE_NAME } = {
-            [modelName: string]: ParsedModel;
+            [modelName: string]: ${ PARSED_MODEL_TYPE_NAME };
         };`,
         { overwrite: true }
     );
