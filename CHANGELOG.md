@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.8...v1.2.0) (2023-11-05)
+
+
+### Features
+
+* to release new version ([aa9f9db](https://github.com/dangchinh25/prisma-models-graph/commit/aa9f9dbeaf320090f08953d509e70accaaa632a2))
+
 ## [1.1.8](https://github.com/dangchinh25/prisma-models-graph/compare/v1.1.7...v1.1.8) (2023-11-04)
 
 
