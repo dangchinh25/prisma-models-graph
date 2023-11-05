@@ -1,11 +1,11 @@
-export type ParsedModelRelation = {
+export type ParseModelRelation = {
     modelName: string;
     condition: string;
 };
 
 export type ParsedModel = {
     attributes: string[];
-    relations: ParsedModelRelation[];
+    relations: ParseModelRelation[];
 };
 
 export type ParsedModels = {
