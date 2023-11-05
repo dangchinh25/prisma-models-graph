@@ -11,7 +11,10 @@ import {
 } from 'ts-morph';
 import {
     INDEX_FILE_NAME,
-    MODELS_GRAPH_FILE_NAME, MODELS_GRAPH_VARIABLE_NAME, TYPE_DIRECTORY_NAME
+    MODELS_GRAPH_FILE_NAME,
+    MODELS_GRAPH_VARIABLE_NAME,
+    PARSED_MODELS_TYPE_NAME,
+    TYPE_DIRECTORY_NAME
 } from './config';
 import { parseDMMFModels } from './helpers';
 import { ParsedModels } from './types';
@@ -34,15 +37,22 @@ export const generateCode = async (
 
     const project = new Project( { compilerOptions: { ...baseCompilerOptions } } );
 
-    const generatedModule = await Promise.all( [
-        generateModelsGraphFile(
-            project,
-            baseDirPath,
-            modelsGraph
-        )
-    ] );
+    const generatedTypesDirectory = await generateTypeDirectory(
+        project,
+        baseDirPath
+    );
 
-    await generateIndexFile( project, baseDirPath, generatedModule );
+    const generatedModelsGraphFile = await generateModelsGraphFile(
+        project,
+        baseDirPath,
+        generatedTypesDirectory.getPath(),
+        modelsGraph
+    );
+
+    await generateIndexFile( project, baseDirPath, [
+        generatedTypesDirectory,
+        generatedModelsGraphFile
+    ] );
 
     await project.emit();
 };
@@ -56,6 +66,30 @@ const generateTypeDirectory = async (
         path.resolve( baseGeneratedDirPath, TYPE_DIRECTORY_NAME )
     );
 
+    const modelsTypeSourceFile = generatedTypeDirectory.createSourceFile(
+        path.resolve( generatedTypeDirectory.getPath(), 'models.ts' ),
+        `export type ParsedModelRelation = {
+            modelName: string;
+            condition: string;
+        };
+        
+        export type ParsedModel = {
+            attributes: string[];
+            relations: ParsedModelRelation[];
+        };
+        
+        export type ${ PARSED_MODELS_TYPE_NAME } = {
+            [modelName: string]: ParsedModel;
+        };`,
+        { overwrite: true }
+    );
+
+    await generateIndexFile(
+        project,
+        generatedTypeDirectory.getPath(),
+        [ modelsTypeSourceFile ]
+    );
+
     await generatedTypeDirectory.save();
 
     return generatedTypeDirectory;
@@ -64,6 +98,7 @@ const generateTypeDirectory = async (
 const generateModelsGraphFile = async (
     project: Project,
     baseGeneratedDirPath: string,
+    generatedTypesDirectoryPath: string,
     modelsGraph: ParsedModels
 ): Promise<SourceFile> => {
     const modelsGraphSourceFile = project.createSourceFile(
@@ -72,11 +107,21 @@ const generateModelsGraphFile = async (
         { overwrite: true }
     );
 
+    const relativePathToTypesDirectory = `./${ modelsGraphSourceFile.getRelativePathTo( generatedTypesDirectoryPath ) }`;
+
+    modelsGraphSourceFile.addImportDeclarations( [
+        {
+            moduleSpecifier: relativePathToTypesDirectory,
+            namedImports: [ PARSED_MODELS_TYPE_NAME ]
+        }
+    ] );
+
     modelsGraphSourceFile.addVariableStatement( {
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
                 name: MODELS_GRAPH_VARIABLE_NAME,
+                type: PARSED_MODELS_TYPE_NAME,
                 initializer: JSON.stringify( modelsGraph )
             }
         ],
