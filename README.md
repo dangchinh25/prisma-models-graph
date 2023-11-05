@@ -16,7 +16,7 @@ npm install prisma-models-graph
 **2. Add the generator to the schema**
 
 ```prisma
-generator modelsGraph {
+generator jsonSchema {
   provider = "prisma-models-graph"
 }
 ```
@@ -24,7 +24,7 @@ generator modelsGraph {
 Additional options
 
 ```prisma
-generator modelsGraph {
+generator jsonSchema {
   provider = "prisma-models-graph"
   output = "./customOutputs"
   fileName = "custom.json"
@@ -34,11 +34,8 @@ generator modelsGraph {
 ## Usage
 
 - Add custom relation annotation next to the field you want annotate relationship.
-- Format: `/// [[<Relation Model>.<Relation Model Attribute>]]` (<b>The triple slash is important.</b>)
-
-```prisma
-userId Int @map("user_id) /// [[User.id]]
-```
+- Format: `/// [[<Relation Model>.<Relation Model Attribute>]]`
+  <img src='./assets/annotation.png'>
 
 - With the above annotation, the generated models graph will be like this:
 

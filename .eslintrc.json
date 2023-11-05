@@ -170,7 +170,6 @@
             }
         ],
         "space-before-function-paren": "off",
-        "@typescript-eslint/no-var-requires": "warn",
         "@typescript-eslint/space-before-function-paren": [
             "error",
             "always"
