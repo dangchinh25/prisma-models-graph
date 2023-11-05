@@ -75,7 +75,7 @@ userId Int @map("user_id) /// [[User.id]]
 }
 ```
 
-- To access the generated models graph, import it from `@generated/models-graph`. The generated models graph will be a _typesafe_ object matching the models declared in `schema.prisma`
+- To access the generated models graph, import it from `@generated/models-graph`. The generated models graph will be a _typesafe_ object matching the models declared in `schema.prisma`.
 
 ```js
 import { ModelsGraph } from '@generated/models-graph'
