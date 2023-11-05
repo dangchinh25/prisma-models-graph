@@ -13,6 +13,8 @@ import {
     INDEX_FILE_NAME,
     MODELS_GRAPH_FILE_NAME,
     MODELS_GRAPH_VARIABLE_NAME,
+    MODEL_NAMES_TYPE_NAME,
+    MODEL_NAMES_VARIABLE_NAME,
     PARSED_MODELS_TYPE_NAME,
     PARSED_MODEL_RELATION_TYPE_NAME,
     PARSED_MODEL_TYPE_NAME,
@@ -109,21 +111,38 @@ const generateModelsGraphFile = async (
         { overwrite: true }
     );
 
+    // Add import statements
     const relativePathToTypesDirectory = `./${ modelsGraphSourceFile.getRelativePathTo( generatedTypesDirectoryPath ) }`;
 
     modelsGraphSourceFile.addImportDeclarations( [
         {
             moduleSpecifier: relativePathToTypesDirectory,
-            namedImports: [ PARSED_MODELS_TYPE_NAME ]
+            namedImports: [ PARSED_MODEL_TYPE_NAME ]
         }
     ] );
+
+    // Generate dynamic types and export them
+    const modelNames = Object.keys( modelsGraph );
 
     modelsGraphSourceFile.addVariableStatement( {
         declarationKind: VariableDeclarationKind.Const,
         declarations: [
             {
+                name: MODEL_NAMES_VARIABLE_NAME,
+                initializer: `${ JSON.stringify( modelNames ) } as const`
+            }
+        ]
+    } );
+
+    modelsGraphSourceFile.addStatements( [ `export type ${ MODEL_NAMES_TYPE_NAME } = typeof ${ MODEL_NAMES_VARIABLE_NAME }[number];` ] );
+
+    // Add export statement for the main ModelsGraph
+    modelsGraphSourceFile.addVariableStatement( {
+        declarationKind: VariableDeclarationKind.Const,
+        declarations: [
+            {
                 name: MODELS_GRAPH_VARIABLE_NAME,
-                type: PARSED_MODELS_TYPE_NAME,
+                type: `{[modelName in ${ MODEL_NAMES_TYPE_NAME }]: ${ PARSED_MODEL_TYPE_NAME }}`,
                 initializer: JSON.stringify( modelsGraph )
             }
         ],
