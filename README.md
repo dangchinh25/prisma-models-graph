@@ -34,9 +34,7 @@ generator jsonSchema {
 ## Usage
 
 - Add custom relation annotation next to the field you want annotate relationship.
-- Format: `/// [[<Relation Model>.<Relation Model Attribute>]]`
-  <img src='./assets/annotation.png'>
-
+- Format: `/// [[<Relation Model>.<Relation Model Attribute>]]` ( <b>The triple slash is important</b> )
 - With the above annotation, the generated models graph will be like this:
 
 ```js
