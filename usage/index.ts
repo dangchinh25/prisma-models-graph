@@ -1,3 +1,3 @@
-import { MyEnum } from '@generated/models-graph';
+import { ModelsGraph } from '@generated/models-graph';
 
-console.log( MyEnum );
+console.log( ModelsGraph );
