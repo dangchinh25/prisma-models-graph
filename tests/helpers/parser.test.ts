@@ -1,6 +1,6 @@
-import { parseDMMFModels } from '../../src/helpers';
+import { parseDMMFModels } from '../../src/generator/helpers';
 import { getSampleDMMF } from '../__fixtures__/getSampleDMMF';
-import { ParsedModels } from '../../src/types';
+import { ParsedModels } from '../../src/generator/types';
 import { DMMF } from '@prisma/generator-helper';
 
 describe( 'parseDMMFModels', () => {
