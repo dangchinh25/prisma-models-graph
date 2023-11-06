@@ -12,6 +12,8 @@ export const PARSED_MODEL_TYPE_NAME = 'ParsedModel';
 
 export const PARSED_MODEL_RELATION_TYPE_NAME = 'ParsedModelRelation';
 
+export const PARSED_MODEL_ATTRIBUTE_TYPE_NAME = 'ParsedModelAttribute';
+
 export const MODEL_NAMES_VARIABLE_NAME = 'modelNames';
 
 export const MODEL_NAMES_TYPE_NAME = 'ModelNames';

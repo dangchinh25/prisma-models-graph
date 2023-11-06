@@ -1,0 +1,120 @@
+{
+  "users": {
+    "attributes": [
+      {
+        "name": "id",
+        "type": "Int"
+      },
+      {
+        "name": "email",
+        "type": "String"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "user_type_id",
+        "type": "Int"
+      }
+    ],
+    "relations": [
+      {
+        "modelName": "user_types",
+        "condition": "users.user_type_id = user_types.id"
+      },
+      {
+        "modelName": "posts",
+        "condition": "users.id = posts.user_id"
+      },
+      {
+        "modelName": "users_user_groups",
+        "condition": "users.id = users_user_groups.user_id"
+      }
+    ]
+  },
+  "posts": {
+    "attributes": [
+      {
+        "name": "id",
+        "type": "Int"
+      },
+      {
+        "name": "subject",
+        "type": "String"
+      },
+      {
+        "name": "body",
+        "type": "String"
+      },
+      {
+        "name": "user_id",
+        "type": "Int"
+      }
+    ],
+    "relations": [
+      {
+        "modelName": "users",
+        "condition": "posts.user_id = users.id"
+      }
+    ]
+  },
+  "user_types": {
+    "attributes": [
+      {
+        "name": "id",
+        "type": "Int"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      }
+    ],
+    "relations": [
+      {
+        "modelName": "users",
+        "condition": "user_types.id = users.user_type_id"
+      }
+    ]
+  },
+  "user_groups": {
+    "attributes": [
+      {
+        "name": "id",
+        "type": "Int"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      }
+    ],
+    "relations": [
+      {
+        "modelName": "users_user_groups",
+        "condition": "user_groups.id = users_user_groups.user_group_id"
+      }
+    ]
+  },
+  "users_user_groups": {
+    "attributes": [
+      {
+        "name": "user_id",
+        "type": "Int"
+      },
+      {
+        "name": "user_group_id",
+        "type": "Int"
+      }
+    ],
+    "relations": [
+      {
+        "modelName": "users",
+        "condition": "users_user_groups.user_id = users.id"
+      },
+      {
+        "modelName": "user_groups",
+        "condition": "users_user_groups.user_group_id = user_groups.id"
+      }
+    ]
+  }
+}
