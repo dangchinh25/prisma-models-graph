@@ -29,7 +29,12 @@ describe( 'parseDMMFModels', () => {
             const modelDbName = model.dbName || model.name;
             const parsedModel = parsedModels[ modelDbName ];
 
-            const modelAttributes = model.fields.map( field => field.dbName || field.name );
+            const modelAttributes = model.fields.map( field => {
+                return {
+                    name: field.dbName || field.name,
+                    type: field.type
+                };
+            } );
 
             expect( parsedModel.attributes )
                 .toStrictEqual( expect.arrayContaining( modelAttributes ) );
