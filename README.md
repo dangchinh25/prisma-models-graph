@@ -26,8 +26,7 @@ Additional options
 ```prisma
 generator modelsGraph {
   provider = "prisma-models-graph"
-  output = "./customOutputs"
-  fileName = "custom.json"
+  exportJSON = true // Will also export a JSON models graph along with the typesafe models
 }
 ```
 
