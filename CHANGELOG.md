@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.3.0...v1.4.0) (2023-11-06)
+
+
+### Features
+
+* fix failed test ([bd50da7](https://github.com/dangchinh25/prisma-models-graph/commit/bd50da7386bea2219828ad74f8904fa257a77f9c))
+* include attribute type in parsed model ([62a0384](https://github.com/dangchinh25/prisma-models-graph/commit/62a038466c2f1c0022a1d94c8ded9a8c66e0fcf2))
+* update readme ([3222d30](https://github.com/dangchinh25/prisma-models-graph/commit/3222d308ea679c1493294516e24050fbd2d7b0eb))
+
 # [1.3.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.2.1...v1.3.0) (2023-11-06)
 
 
