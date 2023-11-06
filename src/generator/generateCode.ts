@@ -1,4 +1,3 @@
-import { DMMF } from '@prisma/generator-helper';
 import path from 'path';
 import {
     CompilerOptions,
@@ -20,7 +19,6 @@ import {
     PARSED_MODEL_TYPE_NAME,
     TYPE_DIRECTORY_NAME
 } from './config';
-import { parseDMMFModels } from './helpers';
 import { ParsedModels } from './types';
 
 const baseCompilerOptions: CompilerOptions = {
@@ -35,10 +33,8 @@ const baseCompilerOptions: CompilerOptions = {
 const baseDirPath = 'node_modules/@generated/models-graph';
 
 export const generateCode = async (
-    dmmf: DMMF.Document
+    modelsGraph: ParsedModels
 ): Promise<void> => {
-    const modelsGraph = parseDMMFModels( dmmf.datamodel.models );
-
     const project = new Project( { compilerOptions: { ...baseCompilerOptions } } );
 
     const generatedTypesDirectory = await generateTypeDirectory(
