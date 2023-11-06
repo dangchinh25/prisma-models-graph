@@ -17,7 +17,8 @@ import {
     PARSED_MODELS_TYPE_NAME,
     PARSED_MODEL_RELATION_TYPE_NAME,
     PARSED_MODEL_TYPE_NAME,
-    TYPE_DIRECTORY_NAME
+    TYPE_DIRECTORY_NAME,
+    PARSED_MODEL_ATTRIBUTE_TYPE_NAME
 } from './config';
 import { ParsedModels } from './types';
 
@@ -72,9 +73,14 @@ const generateTypeDirectory = async (
             modelName: string;
             condition: string;
         };
+
+        export type ${ PARSED_MODEL_ATTRIBUTE_TYPE_NAME } = {
+            name: string;
+            type: string;
+        };
         
         export type ${ PARSED_MODEL_TYPE_NAME } = {
-            attributes: string[];
+            attributes: ${ PARSED_MODEL_ATTRIBUTE_TYPE_NAME }[];
             relations: ${ PARSED_MODEL_RELATION_TYPE_NAME }[];
         };
         

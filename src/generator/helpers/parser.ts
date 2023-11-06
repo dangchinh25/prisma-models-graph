@@ -21,7 +21,10 @@ export const parseDMMFModels = (
 
         for ( const field of model.fields ) {
             const attribute = field.dbName || field.name;
-            parsedModel.attributes.push( attribute );
+            parsedModel.attributes.push( {
+                name: attribute,
+                type: field.type
+            } );
             attributesDbNameMap.set( `${ model.name }.${ field.name }`, attribute );
         }
 
