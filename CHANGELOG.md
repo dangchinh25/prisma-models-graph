@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.2.1...v1.3.0) (2023-11-06)
+
+
+### Features
+
+* initial refactor ([1c62f90](https://github.com/dangchinh25/prisma-models-graph/commit/1c62f90669b8cb3d0cbfbd170a12a041682c6fa6))
+* option to export json models graph ([51fea31](https://github.com/dangchinh25/prisma-models-graph/commit/51fea31e29b600f45b83149adb72d734907ff832))
+* update readme ([2d07135](https://github.com/dangchinh25/prisma-models-graph/commit/2d07135db977aa417a2c989e7cc44ceb446ae20a))
+
 ## [1.2.1](https://github.com/dangchinh25/prisma-models-graph/compare/v1.2.0...v1.2.1) (2023-11-05)
 
 
