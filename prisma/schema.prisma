@@ -1,7 +1,6 @@
 generator custom_generator {
-  provider = "node ./dist/generator.js"
-  fileName = "custom.json"
-  output   = "./test"
+  provider   = "node ./dist/generator.js"
+  exportJSON = true
 }
 
 datasource db {
