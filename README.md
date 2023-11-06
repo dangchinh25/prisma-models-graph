@@ -88,6 +88,7 @@ import {
   ParsedModel, // Type definition of a singular generated model graph
   ParsedModels, // Type definition of all generated models graph
   ParsedModelRelation, // Type definition of the relation between two models
-  ModelNames, // List of all generated models name
+  ModelNames, // List of all generated models name,
+  ParsedModelAttribute, // Type definition of generated models attribute
 } from '@generated/models-graph'
 ```
