@@ -144,30 +144,11 @@ const getModelUnsupportedAttributes = (
 
             attributeDefinitionsParts.forEach( part => {
                 if ( part.includes( '@map' ) ) {
-                    const regex = new RegExp( /@map\("([^"]+)"\)/ );
-
-                    const matches = regex.exec( part );
-
-                    if ( !matches ) {
-                        throw new Error( 'Invalid Unsupported attribute definition format.' );
-                    }
-
-                    const [ , matchWithoutSymbol ] = matches;
-
-                    attributeMappedName = matchWithoutSymbol;
+                    attributeMappedName = parseMappedNameDefinition( part );
                 }
             } );
 
-            const regex = new RegExp( /Unsupported\("([^"]+)"\)/ );
-            const matches = regex.exec( typeDefinition );
-
-            if ( !matches ) {
-                throw new Error( 'Invalid Unsupported type definition format.' );
-            }
-
-            const [ , matchWithoutSymbol ] = matches;
-            const trimmedType = matchWithoutSymbol;
-
+            const trimmedType = parseUnsupportedTypeDefinition( typeDefinition );
 
             unsupportedAttributes.push( {
                 name: attributeName,
@@ -178,4 +159,40 @@ const getModelUnsupportedAttributes = (
     }
 
     return unsupportedAttributes;
+};
+
+/**
+ * Parse Unsupported type definition in Prisma format to extract the correct trimmed DB type.
+ * E.g: geography(Point, 4326)
+ * @param typeDefinition Unsupported type definition in Prisma format. E.g: Unsupported("geography(Point,4326)")?
+ */
+const parseUnsupportedTypeDefinition = ( typeDefinition: string ): string => {
+    const regex = new RegExp( /Unsupported\("([^"]+)"\)/ );
+    const matches = regex.exec( typeDefinition );
+
+    if ( !matches ) {
+        throw new Error( 'Invalid Unsupported type definition format.' );
+    }
+
+    const [ , matchWithoutSymbol ] = matches;
+
+    return matchWithoutSymbol;
+};
+
+/**
+ * Parse Mapped name definition in Prisma format to extract the correct DB column name.
+ * @param mappedNameDefinition Mapped name definition in Prisma format. E.g: @map("lat_lng_geography")
+ */
+const parseMappedNameDefinition = ( mappedNameDefinition: string ): string => {
+    const regex = new RegExp( /@map\("([^"]+)"\)/ );
+
+    const matches = regex.exec( mappedNameDefinition );
+
+    if ( !matches ) {
+        throw new Error( 'Invalid mapped name definition format.' );
+    }
+
+    const [ , matchWithoutSymbol ] = matches;
+
+    return matchWithoutSymbol;
 };
