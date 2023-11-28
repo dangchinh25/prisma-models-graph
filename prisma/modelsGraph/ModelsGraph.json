@@ -16,6 +16,10 @@
       {
         "name": "user_type_id",
         "type": "Int"
+      },
+      {
+        "name": "lat_lng_geography",
+        "type": "geography(Point,4326)"
       }
     ],
     "relations": [

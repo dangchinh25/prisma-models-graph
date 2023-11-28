@@ -8,7 +8,7 @@ import { DEFAULT_JSON_FILE_NAME } from './constants';
 import { writeFileSafely } from '../utils';
 
 export const generate = async ( options: GeneratorOptions ): Promise<void> => {
-    const modelsGraph = parseDMMFModels( options.dmmf.datamodel.models );
+    const modelsGraph = parseDMMFModels( options );
 
     const { exportJSON } = options.generator.config;
 

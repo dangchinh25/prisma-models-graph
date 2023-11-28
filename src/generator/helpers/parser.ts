@@ -1,9 +1,12 @@
 import { DMMF } from '@prisma/generator-helper';
 import { ParsedModel, ParsedModels } from '../types';
+import { GeneratorOptions } from '@prisma/generator-helper';
 
 export const parseDMMFModels = (
-    models: DMMF.Model[]
+    options: GeneratorOptions
 ): ParsedModels => {
+    const models = options.dmmf.datamodel.models;
+
     const parsedModels: ParsedModels = {};
     const modelNameDbNameMap: Map<DMMF.Model['name'], string> = new Map();
     const attributesDbNameMap: Map<string, string> = new Map();
@@ -19,6 +22,8 @@ export const parseDMMFModels = (
             relations: []
         };
 
+        const unsupportedFields = getModelUnsupportedFields( options, model.name );
+
         for ( const field of model.fields ) {
             const attribute = field.dbName || field.name;
             parsedModel.attributes.push( {
@@ -26,6 +31,14 @@ export const parseDMMFModels = (
                 type: field.type
             } );
             attributesDbNameMap.set( `${ model.name }.${ field.name }`, attribute );
+        }
+
+        for ( const field of unsupportedFields ) {
+            parsedModel.attributes.push( {
+                name: field.dbName,
+                type: field.type
+            } );
+            attributesDbNameMap.set( `${ model.name }.${ field.name }`, field.dbName );
         }
 
         parsedModels[ modelDbName ] = parsedModel;
@@ -90,6 +103,101 @@ const parseDMMFFieldDocumentation = (
 
     if ( !matches ) {
         throw new Error( 'Invalid relation annotation format.' );
+    }
+
+    const [ , matchWithoutSymbol ] = matches;
+
+    return matchWithoutSymbol;
+};
+
+export type UnsupportedField = {
+    name: string;
+    dbName: string;
+    type: string;
+};
+
+const getModelUnsupportedFields = (
+    options: GeneratorOptions,
+    modelName: DMMF.Model['name']
+): UnsupportedField[] => {
+    const datamodel = options.datamodel;
+
+    // Split the schema into lines
+    const lines = datamodel.split( '\n' );
+
+    const unsupportedFields: UnsupportedField[] = [];
+
+    // Find the model definition
+    const modelIndex = lines.findIndex( line => line.includes( `model ${ modelName }` ) );
+
+    // Find the unsupported attribute within the model definition
+    for ( let i = modelIndex + 1; i < lines.length; i++ ) {
+        const line = lines[ i ];
+
+        // Check if we've reached the end of the model definition
+        if ( line.includes( '}' ) ) {
+            break;
+        }
+
+        // Check if the line defines an unsupported attribute
+        if ( line.includes( 'Unsupported' ) ) {
+            // Extract the attribute name (assuming it's the first word in the line)
+            const attributeDefinitionsParts = line.trim()
+                .split( ' ' );
+
+            const attributeName = attributeDefinitionsParts[ 0 ];
+            const typeDefinition = attributeDefinitionsParts[ 1 ];
+
+            let attributeMappedName: string | null = null;
+
+            attributeDefinitionsParts.forEach( part => {
+                if ( part.includes( '@map' ) ) {
+                    attributeMappedName = parseMappedNameDefinition( part );
+                }
+            } );
+
+            const trimmedType = parseUnsupportedTypeDefinition( typeDefinition );
+
+            unsupportedFields.push( {
+                name: attributeName,
+                dbName: attributeMappedName || attributeName,
+                type: trimmedType
+            } );
+        }
+    }
+
+    return unsupportedFields;
+};
+
+/**
+ * Parse Unsupported type definition in Prisma format to extract the correct trimmed DB type.
+ * E.g: geography(Point, 4326)
+ * @param typeDefinition Unsupported type definition in Prisma format. E.g: Unsupported("geography(Point,4326)")?
+ */
+const parseUnsupportedTypeDefinition = ( typeDefinition: string ): string => {
+    const regex = new RegExp( /Unsupported\("([^"]+)"\)/ );
+    const matches = regex.exec( typeDefinition );
+
+    if ( !matches ) {
+        throw new Error( 'Invalid Unsupported type definition format.' );
+    }
+
+    const [ , matchWithoutSymbol ] = matches;
+
+    return matchWithoutSymbol;
+};
+
+/**
+ * Parse Mapped name definition in Prisma format to extract the correct DB column name.
+ * @param mappedNameDefinition Mapped name definition in Prisma format. E.g: @map("lat_lng_geography")
+ */
+const parseMappedNameDefinition = ( mappedNameDefinition: string ): string => {
+    const regex = new RegExp( /@map\("([^"]+)"\)/ );
+
+    const matches = regex.exec( mappedNameDefinition );
+
+    if ( !matches ) {
+        throw new Error( 'Invalid mapped name definition format.' );
     }
 
     const [ , matchWithoutSymbol ] = matches;
