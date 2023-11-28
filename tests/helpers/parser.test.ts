@@ -1,7 +1,7 @@
 import { parseDMMFModels } from '../../src/generator/helpers';
-import { getSampleDMMF } from '../__fixtures__/getSampleDMMF';
+import { getSampleDMMF, getSampleSchema } from '../__fixtures__/getSampleDMMF';
 import { ParsedModels } from '../../src/generator/types';
-import { DMMF } from '@prisma/generator-helper';
+import { DMMF, GeneratorOptions } from '@prisma/generator-helper';
 
 describe( 'parseDMMFModels', () => {
     let parsedModels: ParsedModels;
@@ -9,8 +9,9 @@ describe( 'parseDMMFModels', () => {
 
     beforeAll( async () => {
         const sampleDMMF = await getSampleDMMF();
+        const samepleSchema = await getSampleSchema();
         dmmfModels = sampleDMMF.datamodel.models;
-        parsedModels = parseDMMFModels( dmmfModels );
+        parsedModels = parseDMMFModels( { dmmf: sampleDMMF, datamodel: samepleSchema } as GeneratorOptions );
     } );
 
     it( 'generates all models with correct db name', () => {
