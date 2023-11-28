@@ -1,9 +1,12 @@
 import { DMMF } from '@prisma/generator-helper';
 import { ParsedModel, ParsedModels } from '../types';
+import { GeneratorOptions } from '@prisma/generator-helper';
 
 export const parseDMMFModels = (
-    models: DMMF.Model[]
+    options: GeneratorOptions
 ): ParsedModels => {
+    const models = options.dmmf.datamodel.models;
+
     const parsedModels: ParsedModels = {};
     const modelNameDbNameMap: Map<DMMF.Model['name'], string> = new Map();
     const attributesDbNameMap: Map<string, string> = new Map();

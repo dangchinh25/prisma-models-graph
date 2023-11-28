@@ -3,6 +3,12 @@ generator custom_generator {
   exportJSON = true
 }
 
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  binaryTargets   = ["native", "debian-openssl-1.1.x", "linux-musl", "darwin"]
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -13,6 +19,8 @@ model User {
   email      String  @unique
   name       String?
   userTypeId Int     @map("user_type_id") /// [[UserType.id]]
+
+  latLngGeography Unsupported("geography(Point, 4326)")? @map("lat_lng_geography")
 
   @@map("users")
 }
@@ -46,23 +54,4 @@ model UserUserGroups {
 
   @@unique([userId, userGroupId])
   @@map("users_user_groups")
-}
-
-enum NotificationType {
-  newPosts
-  newComments
-  newFollowers
-  reply
-  heartOnPost
-  heartOnComment
-  heartOnReply
-}
-
-enum Language {
-  Typescript
-  Javascript
-  Rust
-  Go
-  Python
-  Cpp
 }
