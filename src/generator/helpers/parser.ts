@@ -17,6 +17,8 @@ export const parseDMMFModels = (
         const modelDbName = model.dbName || model.name;
         modelNameDbNameMap.set( model.name, modelDbName );
 
+        console.log( getModelUnsupportedAttributes( options, model.name ) );
+
         const parsedModel: ParsedModel = {
             attributes: [],
             relations: []
@@ -98,4 +100,82 @@ const parseDMMFFieldDocumentation = (
     const [ , matchWithoutSymbol ] = matches;
 
     return matchWithoutSymbol;
+};
+
+export type UnsupportedAttribute = {
+    name: string;
+    dbName: string;
+    type: string;
+};
+
+const getModelUnsupportedAttributes = (
+    options: GeneratorOptions,
+    modelName: DMMF.Model['name']
+): UnsupportedAttribute[] => {
+    const datamodel = options.datamodel;
+
+    // Split the schema into lines
+    const lines = datamodel.split( '\n' );
+
+    const unsupportedAttributes: UnsupportedAttribute[] = [];
+
+    // Find the model definition
+    const modelIndex = lines.findIndex( line => line.includes( `model ${ modelName }` ) );
+
+    // Find the unsupported attribute within the model definition
+    for ( let i = modelIndex + 1; i < lines.length; i++ ) {
+        const line = lines[ i ];
+
+        // Check if we've reached the end of the model definition
+        if ( line.includes( '}' ) ) {
+            break;
+        }
+
+        // Check if the line defines an unsupported attribute
+        if ( line.includes( 'Unsupported' ) ) {
+            // Extract the attribute name (assuming it's the first word in the line)
+            const attributeDefinitionsParts = line.trim()
+                .split( ' ' );
+
+            const attributeName = attributeDefinitionsParts[ 0 ];
+            const typeDefinition = attributeDefinitionsParts[ 1 ];
+
+            let attributeMappedName: string | null = null;
+
+            attributeDefinitionsParts.forEach( part => {
+                if ( part.includes( '@map' ) ) {
+                    const regex = new RegExp( /@map\("([^"]+)"\)/ );
+
+                    const matches = regex.exec( part );
+
+                    if ( !matches ) {
+                        throw new Error( 'Invalid Unsupported attribute definition format.' );
+                    }
+
+                    const [ , matchWithoutSymbol ] = matches;
+
+                    attributeMappedName = matchWithoutSymbol;
+                }
+            } );
+
+            const regex = new RegExp( /Unsupported\("([^"]+)"\)/ );
+            const matches = regex.exec( typeDefinition );
+
+            if ( !matches ) {
+                throw new Error( 'Invalid Unsupported type definition format.' );
+            }
+
+            const [ , matchWithoutSymbol ] = matches;
+            const trimmedType = matchWithoutSymbol;
+
+
+            unsupportedAttributes.push( {
+                name: attributeName,
+                dbName: attributeMappedName || attributeName,
+                type: trimmedType
+            } );
+        }
+    }
+
+    return unsupportedAttributes;
 };

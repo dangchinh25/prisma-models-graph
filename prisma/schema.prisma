@@ -20,7 +20,7 @@ model User {
   name       String?
   userTypeId Int     @map("user_type_id") /// [[UserType.id]]
 
-  latLngGeography Unsupported("geography(Point, 4326)")? @map("lat_lng_geography")
+  latLngGeography Unsupported("geography(Point,4326)")? @map("lat_lng_geography")
 
   @@map("users")
 }
