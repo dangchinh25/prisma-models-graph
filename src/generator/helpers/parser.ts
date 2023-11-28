@@ -17,12 +17,12 @@ export const parseDMMFModels = (
         const modelDbName = model.dbName || model.name;
         modelNameDbNameMap.set( model.name, modelDbName );
 
-        console.log( getModelUnsupportedAttributes( options, model.name ) );
-
         const parsedModel: ParsedModel = {
             attributes: [],
             relations: []
         };
+
+        const unsupportedFields = getModelUnsupportedFields( options, model.name );
 
         for ( const field of model.fields ) {
             const attribute = field.dbName || field.name;
@@ -31,6 +31,14 @@ export const parseDMMFModels = (
                 type: field.type
             } );
             attributesDbNameMap.set( `${ model.name }.${ field.name }`, attribute );
+        }
+
+        for ( const field of unsupportedFields ) {
+            parsedModel.attributes.push( {
+                name: field.dbName,
+                type: field.type
+            } );
+            attributesDbNameMap.set( `${ model.name }.${ field.name }`, field.dbName );
         }
 
         parsedModels[ modelDbName ] = parsedModel;
@@ -102,22 +110,22 @@ const parseDMMFFieldDocumentation = (
     return matchWithoutSymbol;
 };
 
-export type UnsupportedAttribute = {
+export type UnsupportedField = {
     name: string;
     dbName: string;
     type: string;
 };
 
-const getModelUnsupportedAttributes = (
+const getModelUnsupportedFields = (
     options: GeneratorOptions,
     modelName: DMMF.Model['name']
-): UnsupportedAttribute[] => {
+): UnsupportedField[] => {
     const datamodel = options.datamodel;
 
     // Split the schema into lines
     const lines = datamodel.split( '\n' );
 
-    const unsupportedAttributes: UnsupportedAttribute[] = [];
+    const unsupportedFields: UnsupportedField[] = [];
 
     // Find the model definition
     const modelIndex = lines.findIndex( line => line.includes( `model ${ modelName }` ) );
@@ -150,7 +158,7 @@ const getModelUnsupportedAttributes = (
 
             const trimmedType = parseUnsupportedTypeDefinition( typeDefinition );
 
-            unsupportedAttributes.push( {
+            unsupportedFields.push( {
                 name: attributeName,
                 dbName: attributeMappedName || attributeName,
                 type: trimmedType
@@ -158,7 +166,7 @@ const getModelUnsupportedAttributes = (
         }
     }
 
-    return unsupportedAttributes;
+    return unsupportedFields;
 };
 
 /**
