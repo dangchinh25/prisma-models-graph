@@ -1,3 +1,18 @@
+# [1.5.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.4.0...v1.5.0) (2023-11-28)
+
+
+### Bug Fixes
+
+* Fix failed tests ([1c6bb40](https://github.com/dangchinh25/prisma-models-graph/commit/1c6bb40e610471be6957deee2dd4ef7c917e87f8))
+
+
+### Features
+
+* add helper function to parse unsupported attributes ([8dda7f8](https://github.com/dangchinh25/prisma-models-graph/commit/8dda7f86c6ea47c3114435430710050c8945b664))
+* Minor refactor ([01bcb5a](https://github.com/dangchinh25/prisma-models-graph/commit/01bcb5ada5d145a9be72df96ccfd94f308007399))
+* Refactor to split Regex functions ([02b4d73](https://github.com/dangchinh25/prisma-models-graph/commit/02b4d73f04371c6bfe582525332859b41e45184e))
+* Rename functions and update core parser logic ([a0ab59d](https://github.com/dangchinh25/prisma-models-graph/commit/a0ab59df64ad54cd470496264bcf63b54ac79c3b))
+
 # [1.4.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.3.0...v1.4.0) (2023-11-06)
 
 
