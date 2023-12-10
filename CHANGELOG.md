@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/dangchinh25/prisma-models-graph/compare/v1.5.0...v1.5.1) (2023-12-10)
+
+
+### Bug Fixes
+
+* Ignore prisma relational attributes ([a30e1ac](https://github.com/dangchinh25/prisma-models-graph/commit/a30e1acb67c80249fe44d4f4bd8414458eb919a9))
+
 # [1.5.0](https://github.com/dangchinh25/prisma-models-graph/compare/v1.4.0...v1.5.0) (2023-11-28)
 
 
