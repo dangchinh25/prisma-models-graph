@@ -22,6 +22,8 @@ model User {
 
   latLngGeography Unsupported("geography(Point,4326)")? @map("lat_lng_geography")
 
+  posts Post[]
+
   @@map("users")
 }
 
@@ -30,6 +32,8 @@ model Post {
   subject String
   body    String
   userId  Int    @map("user_id") /// [[User.id]]
+
+  user User @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   @@map("posts")
 }
