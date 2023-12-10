@@ -10,8 +10,12 @@ export const parseDMMFModels = (
     const parsedModels: ParsedModels = {};
     const modelNameDbNameMap: Map<DMMF.Model['name'], string> = new Map();
     const attributesDbNameMap: Map<string, string> = new Map();
+    const modelsSet: Set<DMMF.Model['name']> = new Set();
 
-    // First pass to init parsedModels object with all model
+    // First pass to register all models
+    models.forEach( model => modelsSet.add( model.name ) );
+
+    // Second pass to init parsedModels object with all model
     // and its attribute with empty relations
     for ( const model of models ) {
         const modelDbName = model.dbName || model.name;
@@ -25,6 +29,10 @@ export const parseDMMFModels = (
         const unsupportedFields = getModelUnsupportedFields( options, model.name );
 
         for ( const field of model.fields ) {
+            if ( modelsSet.has( field.type ) ) {
+                continue;
+            }
+
             const attribute = field.dbName || field.name;
             parsedModel.attributes.push( {
                 name: attribute,
@@ -44,7 +52,7 @@ export const parseDMMFModels = (
         parsedModels[ modelDbName ] = parsedModel;
     }
 
-    // Second pass to populate bi-directional relations
+    // Third pass to populate bi-directional relations
     for ( const model of models ) {
         const modelDbName = modelNameDbNameMap.get( model.name );
 

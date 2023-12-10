@@ -1,16 +1,18 @@
 import { parseDMMFModels } from '../../src/generator/helpers';
 import { getSampleDMMF, getSampleSchema } from '../__fixtures__/getSampleDMMF';
-import { ParsedModels } from '../../src/generator/types';
+import { ParsedModels, ParsedModelAttribute } from '../../src/generator/types';
 import { DMMF, GeneratorOptions } from '@prisma/generator-helper';
 
 describe( 'parseDMMFModels', () => {
     let parsedModels: ParsedModels;
     let dmmfModels: DMMF.Model[];
+    let modelName: DMMF.Model['name'][];
 
     beforeAll( async () => {
         const sampleDMMF = await getSampleDMMF();
         const samepleSchema = await getSampleSchema();
         dmmfModels = sampleDMMF.datamodel.models;
+        modelName = dmmfModels.map( model => model.name );
         parsedModels = parseDMMFModels( { dmmf: sampleDMMF, datamodel: samepleSchema } as GeneratorOptions );
     } );
 
@@ -25,17 +27,24 @@ describe( 'parseDMMFModels', () => {
             );
     } );
 
-    it( 'generates all attributes of each models', () => {
+    it( 'generates all attributes of each models except relational attributes', () => {
         dmmfModels.map( model => {
             const modelDbName = model.dbName || model.name;
             const parsedModel = parsedModels[ modelDbName ];
+            const modelAttributes: ParsedModelAttribute[] = [];
 
-            const modelAttributes = model.fields.map( field => {
-                return {
+            // Create expected value from sampleDMMF
+            // TODO Hardcode the expected value for more accurate unit test
+            for ( const field of model.fields ) {
+                if ( modelName.includes( field.type ) ) {
+                    continue;
+                }
+
+                modelAttributes.push( {
                     name: field.dbName || field.name,
                     type: field.type
-                };
-            } );
+                } );
+            }
 
             expect( parsedModel.attributes )
                 .toStrictEqual( expect.arrayContaining( modelAttributes ) );
